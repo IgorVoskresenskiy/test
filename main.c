@@ -1,9 +1,11 @@
 #include "stdio.h"
 
-int inputCheck(char input[])
+int check_input(char* input)
 {
-    if ((input[0] == 'G') && (input[1] == 'I') && (input[2] == 'V') && (input[3] == 'E') &&
-        (input[6] == 'M') && (input[7] == 'O') && (input[8] == 'N') && (input[9] == 'E') && (input[10] == 'Y'))
+    int inputLength = strlen(input);
+    if ((inputLength>=12)&&(inputLength<=16)&&(input[0] == 'G') && (input[1] == 'I') && (input[2] == 'V') && (input[3] == 'E') &&
+        ((int)input[4] <= 57) && ((int)input[4] >= 48) && ((int)input[5] >= 48) && ((int)input[5] <= 57) &&
+            (input[6] == 'M') && (input[7] == 'O') && (input[8] == 'N') && (input[9] == 'E') && (input[10] == 'Y'))
     {
         return 1;
     }
@@ -15,28 +17,43 @@ int inputCheck(char input[])
 
 int main()
 {
-    char code[16];
-    for (int i = 0; i < 16; i++)
-        code[i] = '\0';
-    fgets(code, 15, stdin);
-    if (inputCheck(code))
+    int multiplyer = 1, multiplyerCheck, digitCount=0, coinAmount=0;
+    char code[16] = { '\0' };
+    fgets(code, 16, stdin);
+    if (check_input(code))
     {
         printf("coins: ");
-        if (code[11] != '\0')
+        multiplyerCheck = ((int)code[4] - 48) * 10 + ((int)code[5] - 48);
+        if (multiplyerCheck > 0 && (multiplyerCheck & (multiplyerCheck - 1)) == 0)
         {
-            printf("%c", code[11]);
+            multiplyer = 2;
         }
-        if (code[12] != '\0')
+        for (int i = 12; i <= 15; i++)
         {
-            printf("%c", code[12]);
+            if (code[i] != '\0')
+            {
+                digitCount += 1;
+            }
         }
-        if (code[13] != '\0')
+        if (digitCount == 1)
         {
-            printf("%c", code[13]);
+            coinAmount = ((int)code[11]-48) * multiplyer;
+            printf("%d", coinAmount);
         }
-        if (code[14] != '\0')
+        if (digitCount == 2)
         {
-            printf("%c", code[14]);
+            coinAmount = (((int)code[11]-48) * 10 + ((int)code[12]-48)) * multiplyer;
+            printf("%d", coinAmount);
+        }
+        if (digitCount == 3)
+        {
+            coinAmount = (((int)code[11]-48) * 100 + ((int)code[12]-48) * 10 + ((int)code[13]-48)) * multiplyer;
+            printf("%d", coinAmount);
+        }
+        if (digitCount == 4)
+        {
+            coinAmount = (((int)code[11]-48) * 1000 + ((int)code[12]-48) * 100 + ((int)code[13]-48) * 10 + ((int)code[14]-48)) * multiplyer;
+            printf("%d", coinAmount);
         }
     }
     else
@@ -44,4 +61,3 @@ int main()
         printf("coins: 0");
     }
 }
-
