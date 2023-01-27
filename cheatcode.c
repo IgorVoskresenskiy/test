@@ -1,16 +1,16 @@
-/*#include "stdio.h"
+#include "stdio.h"
 #include "stdbool.h"
 
 #define IS_NUMBER_POW_OF_TWO(number) ((((number) > 0) && ((number) & ((number) - 1))) == 0)
 #define ASCII_0_DIGIT_OFFSET 0x30
 #define ASCII_9_DIGIT_OFFSET 0x39
 
-int ASCII_to_int(int asciiCode)
+int ascii_to_int(int asciiCode)
 {
     return asciiCode - ASCII_0_DIGIT_OFFSET;
 }
 
-bool check_input(char* input)
+static bool check_input(char* input)
 {
     int inputLength = strlen(input);
     bool isLengthOk = inputLength >= 12 && inputLength <= 16;
@@ -19,9 +19,9 @@ bool check_input(char* input)
         (int)input[5] >= ASCII_0_DIGIT_OFFSET && (int)input[5] <= ASCII_9_DIGIT_OFFSET;
 
     bool isMaskOk = input[0] == 'G' && input[1] == 'I' && input[2] == 'V' && input[3] == 'E' &&
-            input[6] == 'M'&& input[7] == 'O'&& input[8] == 'N'&& input[9] == 'E'&& input[10] == 'Y';
+        input[6] == 'M' && input[7] == 'O' && input[8] == 'N' && input[9] == 'E' && input[10] == 'Y';
 
-    bool isCoinAmountCorrect = (int)input[11] <= ASCII_9_DIGIT_OFFSET && (int)input[11] >= ASCII_0_DIGIT_OFFSET && 
+    bool isCoinAmountCorrect = (int)input[11] <= ASCII_9_DIGIT_OFFSET && (int)input[11] >= ASCII_0_DIGIT_OFFSET &&
         (int)input[12] >= ASCII_0_DIGIT_OFFSET && (int)input[12] <= ASCII_9_DIGIT_OFFSET &&
         (int)input[13] >= ASCII_0_DIGIT_OFFSET && (int)input[13] <= ASCII_9_DIGIT_OFFSET &&
         (int)input[14] >= ASCII_0_DIGIT_OFFSET && (int)input[14] <= ASCII_9_DIGIT_OFFSET;
@@ -36,13 +36,13 @@ bool check_input(char* input)
 
 int main()
 {
-    int multiplyer = 1, cheatNumber, digitCount=0, coinAmount=0;
+    int multiplyer = 1, cheatNumber, digitCount = 0, coinAmount = 0;
     char code[16] = { '\0' };
     fgets(code, 16, stdin);
     if (check_input(code))
     {
         printf("coins: ");
-        cheatNumber = ASCII_to_int(code[4]) * 10 + ASCII_to_int(code[5]);
+        cheatNumber = ascii_to_int(code[4]) * 10 + ascii_to_int(code[5]);
         if (IS_NUMBER_POW_OF_TWO(cheatNumber))
         {
             multiplyer = 2;
@@ -57,7 +57,7 @@ int main()
         for (int i = 0; i < digitCount; i++)
         {
             coinAmount *= 10;
-            coinAmount += ASCII_to_int(code[11 + i]);
+            coinAmount += ascii_to_int(code[11 + i]);
         }
         printf("%d", coinAmount * multiplyer);
     }
@@ -66,4 +66,3 @@ int main()
         printf("coins: 0");
     }
 }
-*/
