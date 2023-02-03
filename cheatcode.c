@@ -1,10 +1,6 @@
-/*
 #include "stdio.h"
 #include "stdbool.h"
-
-#define IS_NUMBER_POW_OF_TWO(number) ((((number) > 0) && ((number) & ((number) - 1))) == 0)
-#define ASCII_0_DIGIT_OFFSET 0x30
-#define ASCII_9_DIGIT_OFFSET 0x39
+#include "head.h"
 
 int ascii_to_int(int asciiCode)
 {
@@ -35,7 +31,7 @@ static bool check_input(char* input)
     return false;
 }
 
-int main()
+void cheatcode_activation()
 {
     int multiplyer = 1, cheatNumber, digitCount = 0, coinAmount = 0;
     char code[16] = { '\0' };
@@ -67,4 +63,3 @@ int main()
         printf("coins: 0");
     }
 }
-*/

@@ -1,6 +1,7 @@
 #include "stdio.h"
 #include "stdbool.h"
 #include "stdint.h"
+#include "head.h"
 
 #define ASCII_0_DIGIT_OFFSET 0x30
 #define ASCII_9_DIGIT_OFFSET 0x39
@@ -76,4 +77,93 @@ void insert_mac_by_index(int* mac, int* array)
 	array[index * 6 + 3] = mac[3];
 	array[index * 6 + 4] = mac[4];
 	array[index * 6 + 5] = mac[5];
+}
+
+void insert_mac_in_first_unoc(int* mac, int* array)
+{
+	int firstFreeIndex = 0;
+	for (int i = 0; i < 120; i += 6)
+	{
+		if (array[i] == 0)
+		{
+			firstFreeIndex = i / 6;
+			break;
+		}
+	}
+	array[firstFreeIndex * 6] = mac[0];
+	array[firstFreeIndex * 6 + 1] = mac[1];
+	array[firstFreeIndex * 6 + 2] = mac[2];
+	array[firstFreeIndex * 6 + 3] = mac[3];
+	array[firstFreeIndex * 6 + 4] = mac[4];
+	array[firstFreeIndex * 6 + 5] = mac[5];
+}
+
+void delete_mac_by_index(int* mac, int* array)
+{
+	int index;
+	scanf_s("%i", &index);
+	array[index * 6] = 0;
+	array[index * 6 + 1] = 0;
+	array[index * 6 + 2] = 0;
+	array[index * 6 + 3] = 0;
+	array[index * 6 + 4] = 0;
+	array[index * 6 + 5] = 0;
+}
+
+void delete_mac_by_address(int* mac, int* array)
+{
+	for (int i = 0; i < 120; i += 6)
+	{
+		if (array[i] == mac[0])
+		{
+			if (array[i + 1] == mac[1] && array[i + 2] == mac[2] && array[i + 3] == mac[3] && array[i + 4] == mac[4] && array[i + 5] == mac[5])
+			{
+				array[i] = 0;
+				array[i + 1] = 0;
+				array[i + 2] = 0;
+				array[i + 3] = 0;
+				array[i + 4] = 0;
+				array[i + 5] = 0;
+				break;
+			}
+		}
+	}
+}
+
+void delete_all_mac(int* array)
+{
+	for (int i = 0; i < 120; i++)
+	{
+		array[i] = 0;
+	}
+}
+
+void print_mac_by_index(int* array)
+{
+	int index;
+	scanf_s("%i", &index);
+	if (array[index * 6] != 0)
+	{
+		printf("%i", array[index * 6]);
+		printf("%i", array[index * 6 + 1]);
+		printf("%i", array[index * 6 + 2]);
+		printf("%i", array[index * 6 + 3]);
+		printf("%i", array[index * 6 + 4]);
+		printf("%i", array[index * 6 + 5]);
+	}
+}
+
+int find_mac_by_address(int* mac, int* array)
+{
+	for (int i = 0; i < 120; i += 6)
+	{
+		if (array[i] == mac[0])
+		{
+			if (array[i + 1] == mac[1] && array[i + 2] == mac[2] && array[i + 3] == mac[3] && array[i + 4] == mac[4] && array[i + 5] == mac[5])
+			{
+				return i;
+			}
+		}
+	}
+	return 0;
 }
