@@ -44,7 +44,7 @@ void cheatcode_activation()
     uint8_t digitCount = 0;
     uint16_t coinAmount = 0;
     char code[CHEAT_CODE_LENGTH] = { '\0' };
-    fgets(code, CHEAT_CODE_LENGTH, stdin);
+    gets_s(code, CHEAT_CODE_LENGTH);
     if (check_input(code))
     {
         printf("coins: ");
@@ -55,7 +55,7 @@ void cheatcode_activation()
         }
         for (uint8_t i = 11; i < 15; i++)
         {
-            if ((code[i] != '\0') && (code[i] != '\n'))
+            if ((code[i] != '\0') && (code[i] != '\n') && (code[i] != 'þ'))
             {
                 digitCount += 1;
             }

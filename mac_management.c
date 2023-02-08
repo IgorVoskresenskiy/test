@@ -2,6 +2,7 @@
 #include "stdbool.h"
 #include "stdint.h"
 #include "head.h"
+#include "stdlib.h"
 
 #define ASCII_0_DIGIT_OFFSET 0x30
 #define ASCII_9_DIGIT_OFFSET 0x39
@@ -12,6 +13,7 @@
 #define ASCII_UPPERCASE_HEX_CONVERSION 0x37
 #define ASCII_TO_UPPERCASE_CONVERSION 0x20
 
+uint8_t array[120] = { 0 };
 
 bool mac_mgmt_is_input_correct(char* macAddr)
 {
@@ -195,27 +197,32 @@ void mac_manage(int* array)
 	printf("\n");
 	printf("8 - exit");
 	printf("\n");
-	
-	uint8_t inputToConvert[2] = { 0 };
-	fgets(inputToConvert, 2, stdin);
-	uint8_t command = inputToConvert[0];
-	inputToConvert[0] = 0;
+
+	uint8_t commandInput[3] = { 0 };
+	gets_s(commandInput, 3);
+	uint8_t command = atoi(commandInput);
+	commandInput[0] = 0;
+	commandInput[1] = 0;
+	commandInput[2] = 0;
 
 	while (command != 8)
 	{
 		char macInput[12] = { 0 };
-		int mac[6] = { 0 };
+		char mac[6] = { 0 };
+		uint8_t indexInput[3] = { 0 };
 		
 		if (command == 1)
 		{
 			uint8_t index = 0;
 			printf("input mac: ");
-			fgets(macInput, 13, stdin);
+			gets_s(macInput, 13);
 			printf("\n");
 			printf("input index: ");
-			fgets(inputToConvert, 2, stdin);
-			index = inputToConvert[0];
-			inputToConvert[0] = 0;
+			gets_s(indexInput, 3);
+			index = atoi(indexInput);
+			indexInput[0] = 0;
+			indexInput[1] = 0;
+			indexInput[2] = 0;
 			printf("\n");
 
 			if (mac_mgmt_is_input_correct(macInput))
@@ -226,15 +233,14 @@ void mac_manage(int* array)
 			}
 			else
 			{
-				printf("incorrect input");
-				printf("\n");
+				printf("incorrect input\n");
 			}
 		}
 
 		if (command == 2)
 		{
 			printf("input mac: ");
-			fgets(macInput, 13, stdin);
+			gets_s(macInput, 13);
 			printf("\n");
 
 			if (mac_mgmt_is_input_correct(macInput))
@@ -245,8 +251,7 @@ void mac_manage(int* array)
 			}
 			else
 			{
-				printf("incorrect input");
-				printf("\n");
+				printf("incorrect input\n");
 			}
 		}
 
@@ -254,9 +259,11 @@ void mac_manage(int* array)
 		{
 			uint8_t index = 0;
 			printf("input index: ");
-			fgets(inputToConvert, 2, stdin);
-			index = inputToConvert[0];
-			inputToConvert[0] = 0;
+			gets_s(indexInput, 3);
+			index = atoi(indexInput);
+			indexInput[0] = 0;
+			indexInput[1] = 0;
+			indexInput[2] = 0;
 			printf("\n");
 
 			mac_mgmt_delete_mac_by_index(index, array);
@@ -265,7 +272,7 @@ void mac_manage(int* array)
 		if (command == 4)
 		{
 			printf("input mac: ");
-			fgets(macInput, 13, stdin);
+			gets_s(macInput, 13);
 			printf("\n");
 
 			if (mac_mgmt_is_input_correct(macInput))
@@ -289,32 +296,22 @@ void mac_manage(int* array)
 		if (command == 6)
 		{
 			uint8_t index = 0;
-			printf("input mac: ");
-			fgets(macInput, 13, stdin);
-			printf("\n");
 			printf("input index: ");
-			fgets(inputToConvert, 2, stdin);
-			index = inputToConvert[0];
-			inputToConvert[0] = 0;
+			gets_s(indexInput, 3);
+			index = atoi(indexInput);
+			indexInput[0] = 0;
+			indexInput[1] = 0;
+			indexInput[2] = 0;
 			printf("\n");
 
-			if (mac_mgmt_is_input_correct(macInput))
-			{
-				mac_mgmt_convert_to_uppercase(macInput);
-				mac_mgmt_convert_string_to_byte_array(macInput, mac);
-				mac_mgmt_print_mac_by_index(index, array);
-			}
-			else
-			{
-				printf("incorrect input");
-				printf("\n");
-			}
+			mac_mgmt_print_mac_by_index(index, array);
+
 		}
 
 		if (command == 7)
 		{
 			printf("input mac: ");
-			fgets(macInput, 13, stdin);
+			gets_s(macInput, 13);
 			printf("\n");
 
 			if (mac_mgmt_is_input_correct(macInput))
@@ -339,8 +336,10 @@ void mac_manage(int* array)
 			}
 		}
 
-		fgets(inputToConvert, 2, stdin);
-		command = inputToConvert[0];
-		inputToConvert[0] = 0;
+		gets_s(commandInput, 3);
+		command = atoi(commandInput);
+		commandInput[0] = 0;
+		commandInput[1] = 0;
+		commandInput[2] = 0;
 	}
 }

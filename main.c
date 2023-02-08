@@ -2,8 +2,7 @@
 #include "stdbool.h"
 #include "stdint.h"
 #include "head.h"
-
-uint8_t array[120] = { 0 };
+#include "stdlib.h"
 
 int main()
 {
@@ -14,16 +13,15 @@ int main()
 	printf("2 - access mac storage");
 	printf("\n");
 
-	uint8_t commandToConvert[2] = { 0 };
-	fgets(commandToConvert, 2, stdin);
-	uint8_t command = commandToConvert[0];
-	commandToConvert[0] = 0;
+	uint8_t commandInput[3] = { 0 };
+	gets_s(commandInput, 3);
+	uint8_t command = atoi(commandInput);
 
-	if (command == '1')
+	if (command == 1)
 	{
 		cheatcode_activation();
 	}
-	if (command == '2')
+	if (command == 2)
 	{
 		mac_manage(array);
 	}
