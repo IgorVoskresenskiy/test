@@ -18,10 +18,10 @@
     <ClCompile Include="main.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="cheatcode.c">
+    <ClCompile Include="mac_management.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="MACmanagement.c">
+    <ClCompile Include="cheat_code.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

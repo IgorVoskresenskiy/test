@@ -128,8 +128,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="cheatcode.c" />
-    <ClCompile Include="MACmanagement.c" />
+    <ClCompile Include="cheat_code.c" />
+    <ClCompile Include="mac_management.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
