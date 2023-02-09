@@ -16,6 +16,7 @@ static int ascii_to_int(int asciiCode)
 static bool check_input(char* input)
 {
     int inputLength = strlen(input);
+
     bool isLengthOk = inputLength >= 12 && inputLength <= 16;
 
     bool isNumbersOk = (int)input[4] <= ASCII_9_DIGIT_OFFSET && (int)input[4] >= ASCII_0_DIGIT_OFFSET &&
@@ -43,8 +44,11 @@ void cheatcode_activation()
     uint8_t cheatNumber;
     uint8_t digitCount = 0;
     uint16_t coinAmount = 0;
+
     char code[CHEAT_CODE_LENGTH] = { '\0' };
+
     gets_s(code, CHEAT_CODE_LENGTH);
+
     if (check_input(code))
     {
         printf("coins: ");

@@ -12,8 +12,18 @@
 #define ASCII_f_DIGIT_OFFSET 0x66
 #define ASCII_UPPERCASE_HEX_CONVERSION 0x37
 #define ASCII_TO_UPPERCASE_CONVERSION 0x20
+#define MAC_ARRAY_SIZE_FOR_20_MAC 120
 
-uint8_t array[120] = { 0 };
+#define INSERT_MAC_BY_INDEX 1
+#define INSERT_MAC_IN_FIRST_FREE_CELL 2
+#define DELETE_MAC_BY_INDEX 3
+#define DELETE_MAC_BY_ADDRESS 4
+#define DELETE_ALL_MAC 5
+#define PRINT_MAC_BY_INDEX_IF_EXISTS 6
+#define CHECK_IF_MAC_IS_IN_ARRAY 7
+#define EXIT_COMMAND 8
+
+uint8_t array[MAC_ARRAY_SIZE_FOR_20_MAC] = { 0 };
 
 bool mac_mgmt_is_input_correct(char* macAddr)
 {
@@ -31,10 +41,7 @@ bool mac_mgmt_is_input_correct(char* macAddr)
 	{
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+	return false;
 }
 
 void mac_mgmt_convert_to_uppercase(char* macAddr)
@@ -53,7 +60,8 @@ void mac_mgmt_convert_string_to_byte_array(char* macAddr, int* macAddrArray)
 {
 	uint8_t firstDigit = 0, secondDigit = 0;
 	uint8_t counter = 0;
-	for (uint8_t i = 0; i < 12; i += 2)
+	uint8_t i=0;
+	for (uint8_t ii = 0; ii < 6; ii++)
 	{
 		if (((int)macAddr[i] >= ASCII_0_DIGIT_OFFSET) && ((int)macAddr[i] <= ASCII_9_DIGIT_OFFSET))
 		{
@@ -75,6 +83,7 @@ void mac_mgmt_convert_string_to_byte_array(char* macAddr, int* macAddrArray)
 
 		macAddrArray[counter] = firstDigit * 16 + secondDigit;
 		counter++;
+		i += 2;
 	}
 }
 
@@ -91,7 +100,7 @@ void mac_mgmt_insert_mac_by_index(int* macAddr, int index, int* array)
 void mac_mgmt_insert_in_free_cell(int* macAddr, int* array)
 {
 	uint8_t firstFreeIndex = 0;
-	for (int i = 0; i < 120; i += 6)
+	for (int i = 0; i < MAC_ARRAY_SIZE_FOR_20_MAC; i += 6)
 	{
 		if (array[i] == 0)
 		{
@@ -119,7 +128,8 @@ void mac_mgmt_delete_mac_by_index(int index, int* array)
 
 void mac_mgmt_delete_mac_by_address(int* macAddr, int* array)
 {
-	for (uint8_t i = 0; i < 120; i += 6)
+	uint8_t i = 0;
+	for (uint8_t ii = 0; ii < 20; i ++)
 	{
 		if (array[i] == macAddr[0])
 		{
@@ -134,12 +144,13 @@ void mac_mgmt_delete_mac_by_address(int* macAddr, int* array)
 				break;
 			}
 		}
+		i += 6;
 	}
 }
 
 void mac_mgmt_delete_all_mac(int* array)
 {
-	for (uint8_t i = 0; i < 120; i++)
+	for (uint8_t i = 0; i < MAC_ARRAY_SIZE_FOR_20_MAC; i++)
 	{
 		array[i] = 0;
 	}
@@ -149,12 +160,12 @@ void mac_mgmt_print_mac_by_index(int index, int* array)
 {
 	if (array[index * 6] != 0)
 	{
-		printf("%i", array[index * 6]);
-		printf("%i", array[index * 6 + 1]);
-		printf("%i", array[index * 6 + 2]);
-		printf("%i", array[index * 6 + 3]);
-		printf("%i", array[index * 6 + 4]);
-		printf("%i", array[index * 6 + 5]);
+		printf("%X", array[index * 6]);
+		printf("%X", array[index * 6 + 1]);
+		printf("%X", array[index * 6 + 2]);
+		printf("%X", array[index * 6 + 3]);
+		printf("%X", array[index * 6 + 4]);
+		printf("%X", array[index * 6 + 5]);
 	}
 	else
 	{
@@ -164,7 +175,8 @@ void mac_mgmt_print_mac_by_index(int index, int* array)
 
 bool mac_mgmt_check_if_mac_in_array(int* macAddr, int* array)
 {
-	for (uint8_t i = 0; i < 120; i += 6)
+	uint8_t i = 0;
+	for (uint8_t ii = 0; ii < 20; ii++)
 	{
 		if (array[i] == macAddr[0])
 		{
@@ -173,6 +185,7 @@ bool mac_mgmt_check_if_mac_in_array(int* macAddr, int* array)
 				return true;
 			}
 		}
+		i += 6;
 	}
 	return false;
 }
@@ -205,13 +218,13 @@ void mac_manage(int* array)
 	commandInput[1] = 0;
 	commandInput[2] = 0;
 
-	while (command != 8)
+	while (command != EXIT_COMMAND)
 	{
-		char macInput[12] = { 0 };
+		char macInput[256] = { 0 };
 		char mac[6] = { 0 };
-		uint8_t indexInput[3] = { 0 };
+		uint8_t indexInput[256] = { 0 };
 		
-		if (command == 1)
+		if (command == INSERT_MAC_BY_INDEX)
 		{
 			uint8_t index = 0;
 			printf("input mac: ");
@@ -237,7 +250,7 @@ void mac_manage(int* array)
 			}
 		}
 
-		if (command == 2)
+		if (command == INSERT_MAC_IN_FIRST_FREE_CELL)
 		{
 			printf("input mac: ");
 			gets_s(macInput, 13);
@@ -255,7 +268,7 @@ void mac_manage(int* array)
 			}
 		}
 
-		if (command == 3)
+		if (command == DELETE_MAC_BY_INDEX)
 		{
 			uint8_t index = 0;
 			printf("input index: ");
@@ -269,7 +282,7 @@ void mac_manage(int* array)
 			mac_mgmt_delete_mac_by_index(index, array);
 		}
 
-		if (command == 4)
+		if (command == DELETE_MAC_BY_ADDRESS)
 		{
 			printf("input mac: ");
 			gets_s(macInput, 13);
@@ -288,12 +301,12 @@ void mac_manage(int* array)
 			}
 		}
 
-		if (command == 5)
+		if (command == DELETE_ALL_MAC)
 		{
 			mac_mgmt_delete_all_mac(array);
 		}
 
-		if (command == 6)
+		if (command == PRINT_MAC_BY_INDEX_IF_EXISTS)
 		{
 			uint8_t index = 0;
 			printf("input index: ");
@@ -305,10 +318,10 @@ void mac_manage(int* array)
 			printf("\n");
 
 			mac_mgmt_print_mac_by_index(index, array);
-
+			printf("\n");
 		}
 
-		if (command == 7)
+		if (command == CHECK_IF_MAC_IS_IN_ARRAY)
 		{
 			printf("input mac: ");
 			gets_s(macInput, 13);
@@ -335,6 +348,24 @@ void mac_manage(int* array)
 				printf("\n");
 			}
 		}
+		printf("choose action with mac");
+		printf("\n");
+		printf("1 - insert mac by index");
+		printf("\n");
+		printf("2 - insert mac in first free cell");
+		printf("\n");
+		printf("3 - delete mac by index");
+		printf("\n");
+		printf("4 - delete mac by address");
+		printf("\n");
+		printf("5 - delete all mac");
+		printf("\n");
+		printf("6 - print mac by index if exists");
+		printf("\n");
+		printf("7 - check if mac in array");
+		printf("\n");
+		printf("8 - exit");
+		printf("\n");
 
 		gets_s(commandInput, 3);
 		command = atoi(commandInput);
