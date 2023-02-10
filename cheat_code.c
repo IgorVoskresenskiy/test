@@ -1,7 +1,6 @@
 #include "stdio.h"
 #include "stdbool.h"
 #include "stdint.h"
-#include "head.h"
 
 #define IS_NUMBER_POW_OF_TWO(number) ((((number) > 0) && ((number) & ((number) - 1))) == 0)
 #define ASCII_0_DIGIT_OFFSET 0x30

@@ -1,7 +1,6 @@
 #include "stdio.h"
 #include "stdbool.h"
 #include "stdint.h"
-#include "head.h"
 #include "stdlib.h"
 
 #define ASCII_0_DIGIT_OFFSET 0x30
@@ -190,7 +189,7 @@ bool mac_mgmt_check_if_mac_in_array(int* macAddr, int* array)
 	return false;
 }
 
-void mac_manage(int* array)
+void mac_manage()
 {
 	printf("choose action with mac");
 	printf("\n");
@@ -220,9 +219,9 @@ void mac_manage(int* array)
 
 	while (command != EXIT_COMMAND)
 	{
-		char macInput[256] = { 0 };
+		char macInput[12] = { 0 };
 		char mac[6] = { 0 };
-		uint8_t indexInput[256] = { 0 };
+		uint8_t indexInput[3] = { 0 };
 		
 		if (command == INSERT_MAC_BY_INDEX)
 		{

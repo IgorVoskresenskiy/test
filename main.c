@@ -1,8 +1,12 @@
 #include "stdio.h"
 #include "stdbool.h"
 #include "stdint.h"
-#include "head.h"
 #include "stdlib.h"
+
+#include "string_list.h"
+#include "mac_management.h"
+#include "cheat_code.h"
+#include "head.h"
 
 int main()
 {
@@ -11,6 +15,8 @@ int main()
 	printf("1 - activate cheatcode");
 	printf("\n");
 	printf("2 - access mac storage");
+	printf("\n");
+	printf("3 - access string list");
 	printf("\n");
 
 	uint8_t commandInput[3] = { 0 };
@@ -23,6 +29,10 @@ int main()
 	}
 	if (command == 2)
 	{
-		mac_manage(array);
+		mac_manage();
+	}
+	if (command == 3)
+	{
+		string_list();
 	}
 }

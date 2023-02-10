@@ -131,9 +131,13 @@
     <ClCompile Include="cheat_code.c" />
     <ClCompile Include="mac_management.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="string_list.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cheat_code.h" />
     <ClInclude Include="head.h" />
+    <ClInclude Include="mac_management.h" />
+    <ClInclude Include="string_list.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
